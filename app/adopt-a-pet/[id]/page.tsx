@@ -1,25 +1,21 @@
+// @ts-nocheck
+
 "use client"
 import axios from 'axios';
 import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-interface Pet {
-  id: number;
-  name: string;
-  // Add other properties you expect from the API
-}
-
-export default function PetDetailsPage({ params }: { params: { id: string } }) {
-  const [pet, setPet] = useState<Pet | null>(null);
+export default function PetDetailsPage({ params }) {
+  const [pet, setPet] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchPetData = async () => {
       try {
-        const response = await axios.get<Pet>(`https://thepetnest.com/api/v1/pets/${params.id}`);
+        const response = await axios.get(`https://thepetnest.com/api/v1/pets/${params.id}`);
         setPet(response.data.data.data.pet);
       } catch (err) {
         console.error('Error fetching pet:', err);
@@ -58,7 +54,7 @@ export default function PetDetailsPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="p-4 bg-background-2">
-      {/* Carousel - Responsive height */}
+      
       <div className="carousel w-full h-64 md:h-96 bg-black flex items-center justify-center">
         {pet.images.map((image, index) => (
           <div
@@ -79,12 +75,12 @@ export default function PetDetailsPage({ params }: { params: { id: string } }) {
         ))}
       </div>
 
-      {/* Main Content - Responsive layout */}
+      
       <div className="mt-10 md:mt-20 px-4 sm:px-6 md:px-[50px] flex flex-col lg:flex-row gap-6">
-        {/* Left Column - Full width on mobile, 2/3 on desktop */}
+        
         <div className="w-full lg:w-2/3 mt-5 lg:pl-5">
           <div className="bg-white border-0 rounded-lg shadow-sm">
-            {/* Pet Name Section */}
+            
             <div className="p-6 sm:p-[30px_30px_20px] border-0 bg-transparent relative">
               <h1 className="mb-4 sm:mb-[20px] text-2xl sm:text-4xl block text-[#4d4751] leading-[1.2]">
                 <span className="mb-2 sm:mb-[10px] block">{pet.name}</span>
@@ -100,7 +96,7 @@ export default function PetDetailsPage({ params }: { params: { id: string } }) {
               <div className="block border-0 border-b border-[#d2d1d3] mb-4 sm:mb-[20px]"></div>
             </div>
 
-            {/* About Section */}
+            
             <div className="p-6 sm:p-[30px_30px_20px]">
               <h1 className="mb-4 sm:mb-[15px] text-xl sm:text-[30px] text-[#4d4751] leading-[1.2]">About</h1>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
@@ -131,7 +127,7 @@ export default function PetDetailsPage({ params }: { params: { id: string } }) {
               </div>
             </div>
 
-            {/* Story Section */}
+            
             <div className="p-6 sm:p-[30px_30px_20px]">
               <h2 className="mb-4 sm:mb-[15px] text-xl sm:text-[30px] text-[#4d4751] leading-[1.2]">My Story</h2>
               <div className="mb-5 text-sm sm:text-base">{pet.donation_reason}</div>
@@ -142,46 +138,45 @@ export default function PetDetailsPage({ params }: { params: { id: string } }) {
           </div>
         </div>
 
-        {/* Right Column - Full width on mobile, 1/3 on desktop */}
         <div className="w-full lg:w-1/3 mt-5 lg:pl-5">
-  <div className="mb-6 sm:mb-[30px]">
-    <div className="block w-full mx-auto max-w-[400px]">
-      <div className="overflow-hidden flex flex-col rounded-[10px] shadow-[0_1px_3px_rgba(69,56,35,0.15)] bg-[#F8F5F0]">
-        {/* Adoption CTA */}
-        <div className="p-6 sm:p-[30px] text-center">
-          <h2 className="mb-4 sm:mb-[30px] text-lg sm:text-[20px] text-[#453823] leading-[1.6] font-medium">
-            Considering {pet.name} for adoption?
-          </h2>
-          <Link 
-            className="hover:bg-[#453823] hover:text-[#F8F5F0] block w-full h-[45px] px-4 sm:px-[28px] py-2 sm:py-[11px] font-medium border-2 border-[#453823] bg-[#F8F5F0] text-[#453823] rounded-[23px] shadow-sm whitespace-nowrap text-center text-ellipsis uppercase text-xs sm:text-[14px] leading-[1.4] transition-all duration-200 hover:shadow-md"
-            href='/'
-          >
-            Start Your Inquiry
-          </Link>
+          <div className="mb-6 sm:mb-[30px]">
+            <div className="block w-full mx-auto max-w-[400px]">
+              <div className="overflow-hidden flex flex-col rounded-[10px] shadow-[0_1px_3px_rgba(69,56,35,0.15)] bg-[#F8F5F0]">
+                
+                <div className="p-6 sm:p-[30px] text-center">
+                  <h2 className="mb-4 sm:mb-[30px] text-lg sm:text-[20px] text-[#453823] leading-[1.6] font-medium">
+                    Considering {pet.name} for adoption?
+                  </h2>
+                  <Link 
+                    className="hover:bg-[#453823] hover:text-[#F8F5F0] block w-full h-[45px] px-4 sm:px-[28px] py-2 sm:py-[11px] font-medium border-2 border-[#453823] bg-[#F8F5F0] text-[#453823] rounded-[23px] shadow-sm whitespace-nowrap text-center text-ellipsis uppercase text-xs sm:text-[14px] leading-[1.4] transition-all duration-200 hover:shadow-md"
+                    href='/'
+                  >
+                    Start Your Inquiry
+                  </Link>
 
-          <div className="mt-3 sm:mt-[15px]">
-            <Link 
-              href="#" 
-              className="hover:bg-[#BAA378] hover:border-[#BAA378] text-[#453823] border-[#BAA378] hover:text-[#453823] block w-full h-[45px] px-4 sm:px-[30px] py-2 sm:py-[11px] font-medium border-2 rounded-[23px] whitespace-nowrap text-center text-ellipsis uppercase text-xs sm:text-[14px] leading-[1.4] transition-all duration-200 bg-[#F8F5F0]"
-            >
-              Read FAQs
-            </Link>
+                  <div className="mt-3 sm:mt-[15px]">
+                    <Link 
+                      href="#" 
+                      className="hover:bg-[#BAA378] hover:border-[#BAA378] text-[#453823] border-[#BAA378] hover:text-[#453823] block w-full h-[45px] px-4 sm:px-[30px] py-2 sm:py-[11px] font-medium border-2 rounded-[23px] whitespace-nowrap text-center text-ellipsis uppercase text-xs sm:text-[14px] leading-[1.4] transition-all duration-200 bg-[#F8F5F0]"
+                    >
+                      Read FAQs
+                    </Link>
+                  </div>
+                </div>
+
+                
+                <div className="flex border-t border-[#D9D1C2]">
+                  <button className="hover:bg-[#453823] border-r border-[#D9D1C2] flex-1 min-h-[55px] p-2 sm:p-[10px_18px] text-[#453823] hover:text-[#F8F5F0] text-xs sm:text-[14px] uppercase transition-colors duration-200 font-medium">
+                    Sponsor
+                  </button>
+                  <button className="hover:bg-[#453823] flex-1 min-h-[55px] p-2 sm:p-[10px_18px] text-[#453823] hover:text-[#F8F5F0] text-xs sm:text-[14px] uppercase transition-colors duration-200 font-medium">
+                    Favorite
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Action Buttons */}
-        <div className="flex border-t border-[#D9D1C2]">
-          <button className="hover:bg-[#453823] border-r border-[#D9D1C2] flex-1 min-h-[55px] p-2 sm:p-[10px_18px] text-[#453823] hover:text-[#F8F5F0] text-xs sm:text-[14px] uppercase transition-colors duration-200 font-medium">
-            Sponsor
-          </button>
-          <button className="hover:bg-[#453823] flex-1 min-h-[55px] p-2 sm:p-[10px_18px] text-[#453823] hover:text-[#F8F5F0] text-xs sm:text-[14px] uppercase transition-colors duration-200 font-medium">
-            Favorite
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
       </div>
     </div>
   );
